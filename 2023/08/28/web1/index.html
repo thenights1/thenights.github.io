@@ -1,0 +1,528 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.8.0" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.8.0" type="image/png" sizes="32x32"><meta name="description" content="对一些新手题的回顾">
+<meta property="og:type" content="article">
+<meta property="og:title" content="攻防世界web引导模式 11-20题">
+<meta property="og:url" content="https://thenights1.github.io/2023/08/28/web1/index.html">
+<meta property="og:site_name" content="菜鸟的第一个博客">
+<meta property="og:description" content="对一些新手题的回顾">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903162340.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903162413.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903162643.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903162736.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903162959.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903162946.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903164036.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903165507.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903165616.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903170002.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903170942.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903171019.png">
+<meta property="og:image" content="file:///C:/Users/%E6%89%93%E5%B7%A5%E4%BA%BA/AppData/Roaming/marktext/images/2023-09-03-17-12-35-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903172712.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903172745.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905153458.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905153610.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905153630.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905153707.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905153807.png">
+<meta property="og:image" content="file:///C:/Users/%E6%89%93%E5%B7%A5%E4%BA%BA/AppData/Roaming/marktext/images/2023-09-05-15-41-38-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905154105.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905164723.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905164832.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905191820.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905192232.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905192338.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905203924.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905204242.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905204614.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905204532.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905204827.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905204910.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905204944.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905205215.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230906081001.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230906081053.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230906081214.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230906091424.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230906101236.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230906101353.png">
+<meta property="article:published_time" content="2023-08-28T07:39:30.000Z">
+<meta property="article:modified_time" content="2023-09-06T13:07:01.421Z">
+<meta property="article:author" content="nevgivup">
+<meta property="article:tag" content="ctf回顾">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903162340.png"><title>攻防世界web引导模式 11-20题 | 菜鸟的第一个博客</title><link ref="canonical" href="https://thenights1.github.io/2023/08/28/web1/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.8.0"><link rel="stylesheet" href="css/custom.css"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/gallery/"><span class="header-nav-menu-item__icon"><i class="fas fa-image"></i></span><span class="header-nav-menu-item__text">相册</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner" style="background: url(https://upload-bbs.miyoushe.com/upload/2023/09/03/287413736/8acca901f494eff9a5eb29fbfe41f21a_639135786906979223.jpg) no-repeat center/cover;"><div class="header-banner-info"><div class="header-banner-info__title">欢迎！来访者</div><div class="header-banner-info__subtitle">愿你前行的道路有群星闪耀，愿你留下的足迹有百花绽放~</div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">攻防世界web引导模式 11-20题</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2023-08-28</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2023-09-06</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.9k</span></span><span class="post-meta-item post-meta-item--readtime"><span class="post-meta-item__icon"><i class="far fa-clock"></i></span><span class="post-meta-item__info">阅读时长</span><span class="post-meta-item__value">11分</span></span><span class="post-meta-item post-meta-item--visitors leancloud_visitors" id="/2023/08/28/web1/" data-flag-title="攻防世界web引导模式 11-20题"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value leancloud-visitors-count"></span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body"><blockquote>
+<p>先开个坑，也不知道什么时候能写完</p>
+</blockquote>
+
+        <h2 id="一-simple_js"   >
+          <a href="#一-simple_js" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#一-simple_js"></a> 一、simple_js</h2>
+      
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903162340.png" title="" alt="" width="327">
+<p>这题很简单，先用burp抓包就可以发现源码，观察源码也不知道在搞啥巴拉巴拉，放到vscode上运行一下，发现无论输入啥这个函数输出都是一样的，那么也就是这个函数其实无意义。</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903162413.png" title="" alt="" width="351">这时候就会发现下面还有一串字符，拿去python输出一下，发现是一串数字，给他转成ascii，就会出现flag</p>
+<figure class="highlight python"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\x35\x35\x2c\x35\x36\x2c\x35\x34\x2c\x37\x39\x2c\x31\x31\x35\x2c\x36\x39\x2c\x31\x31\x34\x2c\x31\x31\x36\x2c\x31\x30\x37\x2c\x34\x39\x2c\x35\x30&quot;</span>)</span><br><span class="line">flag = <span class="string">&quot;55,56,54,79,115,69,114,116,107,49,50&quot;</span></span><br><span class="line">flag_1 = flag.split(<span class="string">&quot;,&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(flag_1)</span><br><span class="line">flag2 = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> flag_1:</span><br><span class="line">     flag2 += <span class="built_in">chr</span>(<span class="built_in">int</span>(x))</span><br><span class="line"><span class="built_in">print</span>(flag2)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Cyberpeace&#123;786OsErtk12&#125;</span></span><br></pre></td></tr></table></div></figure>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903162643.png" alt="" /></p>
+
+        <h2 id="二-baby_web"   >
+          <a href="#二-baby_web" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#二-baby_web"></a> 二、baby_web</h2>
+      
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903162736.png" title="" alt="" width="390">
+<p>这题很简单，先点进去发现转到了1.php的路径，并且提示我们最初的页面</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903162959.png" alt="" /></p>
+<p>然后用burp进入index.php，就可以发现flag</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903162946.png" alt="" /></p>
+
+        <h2 id="三-php2"   >
+          <a href="#三-php2" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#三-php2"></a> 三、PHP2</h2>
+      
+<p>这题刚点进去如下，迷迷糊糊用burp抓包一下，也是啥也没有。</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903164036.png" alt="" /></p>
+<p>没办法直接用dirb扫描目录</p>
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903165507.png" title="" alt="" width="472">
+<p>也是啥也没扫出来，没办法google一下，发现了有phps的后缀文件，这种文件就是专门用了存php文件的源代码的，但是只有某些特殊情况才会有（记下来）</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903165616.png" title="" alt="" width="351">这样就可以发现源代码了，根据源代码设计id，但是id不能等于admin。根据源代码，我们可以让id = %61dmin，这样%61就会解码为a，但是发现还是不行，后来搜索得到浏览器会自动完成一次解码，所以还需要将%61再编码为%2561，就可以通关了，得到flag</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903170002.png" alt="" /></p>
+
+        <h2 id="四-ics-06"   >
+          <a href="#四-ics-06" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#四-ics-06"></a> 四、ics-06</h2>
+      
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903170942.png" title="" alt="" width="561">
+<p>这题如提示，进入之后只有一个可以进入</p>
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903171019.png" title="" alt="" width="468">
+<p>那就是报表中心，进入之后发现是日期，但是咋改都没有反应，然后放到burp里面抓包，这时候发现了后面竟然带了一个id=1？似乎有问题，然后直接拿去爆破，先设置1到3000的范围，开始爆破</p>
+<img src="file:///C:/Users/打工人/AppData/Roaming/marktext/images/2023-09-03-17-12-35-image.png" title="" alt="" width="460">
+<p>爆破到2333的时候发现长度明显不一样了，点进去发现flag</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903172712.png" alt="" /></p>
+<img title="" src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230903172745.png" alt="" width="374">
+
+        <h2 id="五-php_rce"   >
+          <a href="#五-php_rce" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#五-php_rce"></a> 五、php_rce</h2>
+      
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905153458.png" title="" alt="" width="386">
+<p>这题最开始做的时候确实摸不到头脑，进去之后是一个thinkphp的页面，并且提示你版本是v5，然后直接拿去Google，并且结合题目名字为phprce，则应该是找漏洞。</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905153610.png" alt="" /></p>
+<p>找到v5的漏洞，直接用一下看看有没有效果</p>
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905153630.png" title="" alt="" width="531">
+<p>可以看到命令成功执行，RCE成功</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905153707.png" alt="" /></p>
+<p>之后就是直接ls / 然后找到flag cat一下就可了，得到flag</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905153807.png" alt="" /></p>
+
+        <h2 id="六-unserialize3"   >
+          <a href="#六-unserialize3" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#六-unserialize3"></a> 六、unserialize3</h2>
+      
+<img src="file:///C:/Users/打工人/AppData/Roaming/marktext/images/2023-09-05-15-41-38-image.png" title="" alt="" width="375">
+<p>结合题目名字unserialize（反序列化）可以得知这题应该和序列化与反序列化有关。进入网址，如下，发现是php代码，则直接去Google搜索php反序列化，我参考的是<span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/youyoui/p/8610068.html" >这篇文章</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>。</p>
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905154105.png" title="" alt="" width="499">
+<p>然后根据代码是如果触发了wakeup函数，就会认为是恶意代码，这也就说明了我们需要绕过wakeup函数才可以得到flag。然后后面是？code=，也就说明让我们自己补充后面的代码使得可以绕过wakeup函数。然后通过Google搜索得到<strong>wakeup方法的漏洞</strong>：</p>
+<p>若在对象的魔法函数中存在的__wakeup方法，那么之后再调用 unserilize() 方法进行反序列化之前则会先调用__wakeup方法，但是序列化字符串中表示对象属性个数的值大于真实的属性个数时会跳过__wakeup的执行。则先补全一下代码，然后输出一下序列化后的数据</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905164723.png" alt="" /></p>
+<p>则可以改为O:4:“xctf”:2:{s:4:“flag”;s:3:“111”;}进行输入，就可以得到flag</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905164832.png" alt="" /></p>
+
+        <h2 id="七-web_php_include"   >
+          <a href="#七-web_php_include" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#七-web_php_include"></a> 七、Web_php_include</h2>
+      
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905191820.png" title="" alt="" width="401">
+<p>这题进入环境是php代码，如下</p>
+<figure class="highlight php"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">show_source</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$_GET</span>[<span class="string">&#x27;hello&#x27;</span>];</span><br><span class="line"><span class="variable">$page</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;page&#x27;</span>];</span><br><span class="line"><span class="keyword">while</span> (<span class="title function_ invoke__">strstr</span>(<span class="variable">$page</span>, <span class="string">&quot;php://&quot;</span>)) &#123;</span><br><span class="line">    <span class="variable">$page</span>=<span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;php://&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="variable">$page</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">include</span>(<span class="variable">$page</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></div></figure>
+<p>显然是文件包含漏洞，搜索一下，主要参考下面这篇文章</p>
+<p><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/Zeker62/p/15322771.html#php%E4%BC%AA%E5%8D%8F%E8%AE%AE" >✔PHP文件包含漏洞全面总结 - Zeker62 - 博客园 (cnblogs.com)</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905192232.png" alt="" /></p>
+<p>利用php://input写入我们的代码，但是本题过滤掉了php://,这里我们就可以用大写来绕过这个判断，因此输入如下</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905192338.png" alt="" /></p>
+<p>代码注入成功，并且执行了我们的代码，可以发现flag所在的文件，直接cat一下，就可以发现flag</p>
+
+        <h2 id="八-upload1"   >
+          <a href="#八-upload1" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#八-upload1"></a> 八、upload1</h2>
+      
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905203924.png" title="" alt="" width="418">
+<p>通过这题熟悉了一些中国蚁剑的用法，感觉还是很nb的。做题过程中主要参考文章如下：</p>
+<p><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/linfangnan/p/15784968.html" >CTF-WEB：经典文件上传漏洞 博客园 (cnblogs.com)</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>首先进入题目，抓包一下，发现部分源码，可以发现上传的文件后缀必须为jpg和png，其他都是无效的。同时也没有做更多限制，所以这题难度还是比较小的。</p>
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905204242.png" title="" alt="" width="404">
+<p>直接新建txt文件，写php代码，然后改后缀为jpg，则发现可以上传。这时候抓包一下：</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905204614.png" alt="" /></p>
+<p>直接在request头里面把1.jpg改为1.php就可以绕过了</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905204532.png" alt="" /></p>
+<p>然后1.php放的是一句话木马，关于这句话的解释可就大有来头了，new bing如是说：</p>
+<p><strong>这句代码是一个 PHP 的一句话木马，它的作用是执行 HTTP POST 方式传递的 ant 参数中的 PHP 代码。它的工作原理是：</strong></p>
+<ul>
+<li>首先，使用 eval() 函数，它可以将一个字符串作为 PHP 代码来执行。</li>
+<li>然后，使用 $_POST[‘ant’] 获取 HTTP POST 方式传递的 ant 参数的值，这个值是一个字符串，可能包含任意的 PHP 代码。</li>
+<li>最后，将 $_POST[‘ant’] 的值作为 eval() 函数的参数，执行其中的 PHP 代码。</li>
+</ul>
+<p><strong>这样，攻击者就可以通过向服务器发送 HTTP POST 请求，携带 ant 参数，来远程执行任意的 PHP 代码。这是非常危险的，因为攻击者可以利用这个漏洞来获取服务器的敏感信息，或者对服务器进行破坏或控制。</strong></p>
+<p>然后上传成功后就是链接中国蚁剑了，找到他返回的文件名当做url地址，ant为密码，他就自动获得shell了，很简单。</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905204827.png" alt="" /></p>
+<p>拿到shell！之后就是去上层找到flag.php打开就可发现flag</p>
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905204910.png" title="" alt="" width="530">
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905204944.png" title="" alt="" width="526">
+
+        <h2 id="九-warmup"   >
+          <a href="#九-warmup" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#九-warmup"></a> 九、warmup</h2>
+      
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230905205215.png" title="" alt="" width="447">
+<p>先打开环境发现就一张图片，没有其他信息，老规矩，先去burp抓包分析，发现提示source.php</p>
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230906081001.png" title="" alt="" width="434">
+<p>然后打开source.php发现源码，可以发现还有另一个hint.php，打开发现提示flag的位置</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230906081053.png" alt="" /></p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230906081214.png" alt="" /></p>
+<p><strong>flag not here, and flag in ffffllllaaaagggg</strong></p>
+<p>接下来就继续看source.php源码了</p>
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230906091424.png" title="" alt="" width="439">
+<p>根据源码容易分析出，输入的file参数需要是字符串并且可以通过检测，而且从检测函数容易得到只要：</p>
+<ul>
+<li>
+<p>第一个if语句：输入的为字符串并且在白名单里面</p>
+</li>
+<li>
+<p>第二个if语句则截取输入在？前的部分检测是否在白名单里面</p>
+</li>
+<li>
+<p>第三个 if 语句前先对变量url解码，然后和第二个if语句一样进行检验</p>
+</li>
+</ul>
+<p>这样容易看出我们可以构建hint.php?dddd类似的输入来绕过判断进入include，并且结合之前的提示，我做的时候是挨个试，例如</p>
+<p>hint.php?../ffffllllaaaagggg   hint.php?../…/ffffllllaaaagggg</p>
+<p>hint.php?../…/…/ffffllllaaaagggg 最后是hint.php?../…/…/…/…/ffffllllaaaagggg成功出现flag</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230906101236.png" alt="" /></p>
+<p>接下来是<strong>为什么hint.php?../…/…/…/…/ffffllllaaaagggg可以起效果</strong>？</p>
+<p>根据php文档，如下，容易看出只要出现…/，include函数就会默认以它开头，而忽略掉hint.php，这就是可以起效果的原因。</p>
+<img title="" src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230906101353.png" alt="" width="494" data-align="inline">
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://thenights1.github.io">nevgivup</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://thenights1.github.io/2023/08/28/web1/">https://thenights1.github.io/2023/08/28/web1/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://thenights1.github.io/tags/ctf%E5%9B%9E%E9%A1%BE/">ctf回顾</a></span></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2023/09/03/yang/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">2023羊城杯ctf - web补题</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2023/07/30/web0/"><span class="paginator-prev__text">攻防世界ctf-web新手引导题前十题wp</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="valine-container"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-simple_js"><span class="toc-number">1.</span> <span class="toc-text">
+           一、simple_js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-baby_web"><span class="toc-number">2.</span> <span class="toc-text">
+           二、baby_web</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-php2"><span class="toc-number">3.</span> <span class="toc-text">
+           三、PHP2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B-ics-06"><span class="toc-number">4.</span> <span class="toc-text">
+           四、ics-06</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94-php_rce"><span class="toc-number">5.</span> <span class="toc-text">
+           五、php_rce</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD-unserialize3"><span class="toc-number">6.</span> <span class="toc-text">
+           六、unserialize3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83-web_php_include"><span class="toc-number">7.</span> <span class="toc-text">
+           七、Web_php_include</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB-upload1"><span class="toc-number">8.</span> <span class="toc-text">
+           八、upload1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D-warmup"><span class="toc-number">9.</span> <span class="toc-text">
+           九、warmup</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://upload-bbs.mihoyo.com/upload/2021/10/26/74359262/6c25b31a89526ae231affd2cd01b0199_5510541678105571893.jpg?x-oss-process=image/auto-orient,0/interlace,1/format,jpg" alt="avatar"></div><p class="sidebar-ov-author__text">一个人，要走过多远的距离，才能在时光的尽头，寻回最初的自己。</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/thenights1" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://cameudis.github.io/" target="_blank" rel="noopener" data-popover="social.友链" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-gratipay"></i></span></a><a class="sidebar-ov-social-item" href="My WeChat ID is gwb12581" target="_blank" rel="noopener" data-popover="微信" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-weixin"></i></span></a><a class="sidebar-ov-social-item" href="My QQ number is 2785895987" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">11</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">2</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">5</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2023</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>nevgivup</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v6.3.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.8.0</span></div><div class="busuanzi"></div><div>执拗的花朵永远不会因暴雨而褪去颜色，你的决心也一定能在绝境中绽放真我。</div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/ribbon.js@latest/dist/ribbon.min.js" size="120" alpha="0.6" zIndex="-1"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script src="https://cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script><script>function loadValine () {
+  var GUEST_INFO = ['nick', 'mail', 'link'];
+  var guest_info = 'nick,mail,link';
+
+  guest_info = guest_info.split(',').filter(function(item) {
+    return GUEST_INFO.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#valine-container',
+    appId: 'FRYdoyUkUkHMwPMiF2Ug3vMi-gzGzoHsz',
+    appKey: 'iRvJDapkfqlLvjbDW06gVYX7',
+    notify: true,
+    verify: true,
+    placeholder: '唉，时间真是个讨厌的东西，你不觉得吗？如果不是时间紧迫，我还想留下更多值得纪念的话语。',
+    avatar: 'mp',
+    meta: guest_info,
+    pageSize: '10' || 10,
+    visitor: true,
+    recordIP: true,
+    lang: 'zh-cn' || 'zh-cn',
+    path: window.location.pathname
+  });
+}
+
+if (false) {
+  loadValine();
+} else {
+  window.addEventListener('DOMContentLoaded', loadValine, false);
+}</script><script src="/js/utils.js?v=2.8.0"></script><script src="/js/stun-boot.js?v=2.8.0"></script><script src="/js/scroll.js?v=2.8.0"></script><script src="/js/header.js?v=2.8.0"></script><script src="/js/sidebar.js?v=2.8.0"></script><script type="application/json" src="/search.json"></script></body></html>
