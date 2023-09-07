@@ -1,0 +1,453 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.8.0" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.8.0" type="image/png" sizes="32x32"><meta name="description" content="以攻防世界中的文件上传题目为例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ctf web中的文件上传绕过之.htaccess与.user.ini的应用">
+<meta property="og:url" content="https://thenights1.github.io/2023/09/07/web3/index.html">
+<meta property="og:site_name" content="菜鸟的第一个博客">
+<meta property="og:description" content="以攻防世界中的文件上传题目为例">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907201230.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907202350.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907202507.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907205241.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907205814.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907210743.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907210910.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907213117.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907213219.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907213259.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907214639.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907214734.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907215208.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907215228.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907215305.png">
+<meta property="article:published_time" content="2023-09-07T12:04:53.000Z">
+<meta property="article:modified_time" content="2023-09-07T13:53:34.628Z">
+<meta property="article:author" content="nevgivup">
+<meta property="article:tag" content="ctf回顾">
+<meta property="article:tag" content="文件上传绕过">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907201230.png"><title>ctf web中的文件上传绕过之.htaccess与.user.ini的应用 | 菜鸟的第一个博客</title><link ref="canonical" href="https://thenights1.github.io/2023/09/07/web3/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.8.0"><link rel="stylesheet" href="css/custom.css"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/links/"><span class="header-nav-menu-item__icon"><i class="fas fa-solid fa-link"></i></span><span class="header-nav-menu-item__text">友链</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/gallery/"><span class="header-nav-menu-item__icon"><i class="fas fa-image"></i></span><span class="header-nav-menu-item__text">相册</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner" style="background: url(https://picx.zhimg.com/v2-1996e1591b91cd4a47a65ec011da9f03_r.jpg?source=1940ef5c) no-repeat center/cover;"><div class="header-banner-info"><div class="header-banner-info__title">欢迎！来访者</div><div class="header-banner-info__subtitle">愿你前行的道路有群星闪耀，愿你留下的足迹有百花绽放~</div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">ctf web中的文件上传绕过之.htaccess与.user.ini的应用</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2023-09-07</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2023-09-07</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">1.4k</span></span><span class="post-meta-item post-meta-item--readtime"><span class="post-meta-item__icon"><i class="far fa-clock"></i></span><span class="post-meta-item__info">阅读时长</span><span class="post-meta-item__value">7分</span></span><span class="post-meta-item post-meta-item--visitors leancloud_visitors" id="/2023/09/07/web3/" data-flag-title="ctf web中的文件上传绕过之.htaccess与.user.ini的应用"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value leancloud-visitors-count"></span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body">
+        <h2 id="一-引入题-upload1-修改后缀绕过前端"   >
+          <a href="#一-引入题-upload1-修改后缀绕过前端" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#一-引入题-upload1-修改后缀绕过前端"></a> 一、引入题-upload1- 修改后缀绕过前端</h2>
+      
+<p>这题就是一道非常简单的文件上传题。前几天做的时候还只是会了这一种方法，今天在做另外一道题目的时候有get到了很多新的解题姿势。先复习一下这题：</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907201230.png" alt="" /></p>
+<p>之前做的时候就知道是这样做的，但是却不知道为什么这样做</p>
+
+        <h3 id="原理"   >
+          <a href="#原理" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#原理"></a> 原理</h3>
+      
+<p>因为抓包的时候的response就会发现部分源码，这在文件上传类型题中属于是前端检测，所以想要绕过前端检测的话就很简单，基本上就是先发一个正常的文件上去，然后在request头里面改成我们想要的格式与内容就可以了</p>
+
+        <h2 id="二-easyupload-利用userini-绕过后端"   >
+          <a href="#二-easyupload-利用userini-绕过后端" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#二-easyupload-利用userini-绕过后端"></a> 二、easyupload - 利用.user.ini 绕过后端</h2>
+      
+<p>这题我主要参考了这篇博客<span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://blog.csdn.net/wuh2333/article/details/130038032?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-130038032-blog-127869260.235%5Ev38%5Epc_relevant_anti_vip_base&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-130038032-blog-127869260.235%5Ev38%5Epc_relevant_anti_vip_base&amp;utm_relevant_index=1" >攻防世界-web-easyupload-CSDN博客</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>回到easyupload这道题本身上来。进入环境</p>
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907202350.png" title="" alt="" width="428">
+<p>并没有提示需要上传什么样的文件</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907202507.png" alt="" /></p>
+<p>然后我就在网上一顿搜索，然后各种试，发现怎么都无法成功绕过，最后没办法看的题解，发现是只要含有php就会报错。而题解给出的应对方法是php的短标签</p>
+
+        <h3 id="短标签"   >
+          <a href="#短标签" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#短标签"></a> 短标签</h3>
+      
+<figure class="highlight php"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?=</span><span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]);<span class="meta">?&gt;</span></span><br></pre></td></tr></table></div></figure>
+<p>但是其实这是echo的简写，也就是&lt;?php echo的简写，如下图。其实还有另一种简写，如下图的第三个方式，但是这种方式容易被限制，本题就是被限制了，只能使用上面那种方法。</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907205241.png" alt="" /></p>
+
+        <h3 id="后缀加绕过"   >
+          <a href="#后缀加绕过" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#后缀加绕过"></a> 后缀加.绕过</h3>
+      
+<p>这题由于对文件名进行了限制，所以普通的在request界面改后缀为.php是无法成功传入文件的。<strong>但是如果后缀是.php.就可以通过检测</strong>。我猜测他的后端代码是检测第一个.后面的字符串，而win系统中会自动忽略第二个.，所以也可以实现文件上传。但是这样下来还有一个问题，就是这题只有index.php可以访问，其他的php文件均不可以访问，所以只能利用.user.ini方法了。</p>
+
+        <h3 id="大写绕过"   >
+          <a href="#大写绕过" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#大写绕过"></a> 大写绕过</h3>
+      
+<p>但是本题还有另一种绕过方法，经过我的测试我发现只有在文件名字上是不分大小写的限制php，而正文内容则只限制小写php，又因为php中的<?php ?>并不区分大小写，所以我们可以将一句话木马改成下面即可。</p>
+<figure class="highlight php"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?</span>PHP <span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;ant&#x27;</span>]); <span class="meta">?&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+        <h3 id="文件头绕过"   >
+          <a href="#文件头绕过" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#文件头绕过"></a> 文件头绕过</h3>
+      
+<p>但是绕过了对内容的检测，发送过去的时候发现还有限制，提示我们的文件类型有问题。我们已知是图片格式就行，而此时已经有了相关的请求头，没有别的估计就只差一个请求头了。这里我们加上GIF89a的文件头。很奇怪这是gif的文件头，但是我上传的类型是jpg的，也可以通过检测，但是如果加的是jpg的文件头就不行。这是一个问题。。</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907205814.png" alt="" /></p>
+<p>反正加上文件头之后就可以上传成功了。这时候就可以肆无忌惮的传我们的文件了。</p>
+
+        <h3 id="userini的利用姿势"   >
+          <a href="#userini的利用姿势" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#userini的利用姿势"></a> .user.ini的利用姿势</h3>
+      
+<p>主要参考这篇讲.user.ini原理的博客<span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://wooyun.js.org/drops/user.ini%E6%96%87%E4%BB%B6%E6%9E%84%E6%88%90%E7%9A%84PHP%E5%90%8E%E9%97%A8.html" >.user.ini文件构成的PHP后门 - phith0n (wooyun.js.org)</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>原理很简单，就是说如果在文件夹下已有正常的可以打开的php文档，就可以利用.user.ini来进行getshell。</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907210743.png" alt="" /></p>
+<p>而这题符不符合呢？答案是非常符合。在抓包的时候我就发现了在上传文件夹下有index.php文件，天真的我以为是给的检测源码，但是打开却发现全是乱码，根本看不了，估计就是出题人故意告诉你可以用.user.ini方法的。</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907210910.png" alt="" /></p>
+<p>而关于为什么不用.htaccess方法，下面我会再讲。继续这题</p>
+<p>我们就可以根据之前的文件头先构建.user.ini，如下</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907213117.png" alt="" /></p>
+<p>主要代码是，使得打开其他的php文件时会自动包含02.jpg</p>
+<figure class="highlight php"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto_prepend_file=<span class="number">02</span>.jpg</span><br></pre></td></tr></table></div></figure>
+<p>接下来就是构造02.jpg，如下，传入一句话木马</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907213219.png" alt="" /></p>
+<p>这样就可以连接蚁剑了，在上层目录中获得flag</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907213259.png" alt="" /></p>
+
+        <h2 id="三-利用htaccess的文件上传"   >
+          <a href="#三-利用htaccess的文件上传" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#三-利用htaccess的文件上传"></a> 三、利用.htaccess的文件上传</h2>
+      
+<p>这个知识点我在攻防世界上并没有找到类似的题目，只能去ctfhub上开启一道简单的应用题了。如下</p>
+<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907214639.png" title="" alt="" width="542">
+<p>进入环境并且抓包，发现部分源码。发现设置了黑名单，但是没有限制.htaccess。所以我们可以利用这个来实现文件上传</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907214734.png" alt="" /></p>
+
+        <h3 id="利用姿势"   >
+          <a href="#利用姿势" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#利用姿势"></a> 利用姿势</h3>
+      
+<p>从网上搜到的常规利用方法如下，主要就是一句话代码：</p>
+<figure class="highlight php"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .png</span><br></pre></td></tr></table></div></figure>
+<p>这句话的意思就是使得之后服务器中的所有png文件都以php进行解析。也就是可以把png文件当做php来用，这就很无赖了啊。</p>
+<p>这里我们也可以知道为啥上一道题不可以利用htaccess了，因为这句话代码里面含有php，会被过滤掉，所有不在考虑范围内。</p>
+<p>回到这题，根据上面的先构造.htaccess，如下</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907215208.png" alt="" /></p>
+<p>然后构造jpg文件，里面内容就是一句话木马</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907215228.png" alt="" /></p>
+<p>全部上传完之后就可以蚁剑直连了！</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/20230907215305.png" alt="" /></p>
+<p>然后获取到flag</p>
+<p>本文完。</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://thenights1.github.io">nevgivup</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://thenights1.github.io/2023/09/07/web3/">https://thenights1.github.io/2023/09/07/web3/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://thenights1.github.io/tags/ctf%E5%9B%9E%E9%A1%BE/">ctf回顾</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://thenights1.github.io/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87/">文件上传绕过</a></span></div><nav class="post-paginator paginator"><div class="paginator-next"><a class="paginator-next__link" href="/2023/09/06/web2/"><span class="paginator-prev__text">ctf web中的php反序列化与正则表达式</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="valine-container"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-%E5%BC%95%E5%85%A5%E9%A2%98-upload1-%E4%BF%AE%E6%94%B9%E5%90%8E%E7%BC%80%E7%BB%95%E8%BF%87%E5%89%8D%E7%AB%AF"><span class="toc-number">1.</span> <span class="toc-text">
+           一、引入题-upload1- 修改后缀绕过前端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">
+           原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-easyupload-%E5%88%A9%E7%94%A8userini-%E7%BB%95%E8%BF%87%E5%90%8E%E7%AB%AF"><span class="toc-number">2.</span> <span class="toc-text">
+           二、easyupload - 利用.user.ini 绕过后端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%AD%E6%A0%87%E7%AD%BE"><span class="toc-number">2.1.</span> <span class="toc-text">
+           短标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E7%BC%80%E5%8A%A0%E7%BB%95%E8%BF%87"><span class="toc-number">2.2.</span> <span class="toc-text">
+           后缀加.绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E5%86%99%E7%BB%95%E8%BF%87"><span class="toc-number">2.3.</span> <span class="toc-text">
+           大写绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B4%E7%BB%95%E8%BF%87"><span class="toc-number">2.4.</span> <span class="toc-text">
+           文件头绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#userini%E7%9A%84%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF"><span class="toc-number">2.5.</span> <span class="toc-text">
+           .user.ini的利用姿势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-%E5%88%A9%E7%94%A8htaccess%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-number">3.</span> <span class="toc-text">
+           三、利用.htaccess的文件上传</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF"><span class="toc-number">3.1.</span> <span class="toc-text">
+           利用姿势</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://upload-bbs.mihoyo.com/upload/2021/10/26/74359262/6c25b31a89526ae231affd2cd01b0199_5510541678105571893.jpg?x-oss-process=image/auto-orient,0/interlace,1/format,jpg" alt="avatar"></div><p class="sidebar-ov-author__text">一个人，要走过多远的距离，才能在时光的尽头，寻回最初的自己。</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/thenights1" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://cameudis.github.io/" target="_blank" rel="noopener" data-popover="social.友链" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-gratipay"></i></span></a><a class="sidebar-ov-social-item" href="My WeChat ID is gwb12581" target="_blank" rel="noopener" data-popover="微信" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-weixin"></i></span></a><a class="sidebar-ov-social-item" href="My QQ number is 2785895987" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">5</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">7</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2023</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>nevgivup</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v6.3.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.8.0</span></div><div class="busuanzi"></div><div>执拗的花朵永远不会因暴雨而褪去颜色，你的决心也一定能在绝境中绽放真我。</div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/ribbon.js@latest/dist/ribbon.min.js" size="120" alpha="0.6" zIndex="-1"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script src="https://cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script><script>function loadValine () {
+  var GUEST_INFO = ['nick', 'mail', 'link'];
+  var guest_info = 'nick,mail,link';
+
+  guest_info = guest_info.split(',').filter(function(item) {
+    return GUEST_INFO.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#valine-container',
+    appId: 'FRYdoyUkUkHMwPMiF2Ug3vMi-gzGzoHsz',
+    appKey: 'iRvJDapkfqlLvjbDW06gVYX7',
+    notify: true,
+    verify: true,
+    placeholder: '唉，时间真是个讨厌的东西，你不觉得吗？如果不是时间紧迫，我还想留下更多值得纪念的话语。',
+    avatar: 'mp',
+    meta: guest_info,
+    pageSize: '10' || 10,
+    visitor: true,
+    recordIP: true,
+    lang: 'zh-cn' || 'zh-cn',
+    path: window.location.pathname
+  });
+}
+
+if (false) {
+  loadValine();
+} else {
+  window.addEventListener('DOMContentLoaded', loadValine, false);
+}</script><script src="/js/utils.js?v=2.8.0"></script><script src="/js/stun-boot.js?v=2.8.0"></script><script src="/js/scroll.js?v=2.8.0"></script><script src="/js/header.js?v=2.8.0"></script><script src="/js/sidebar.js?v=2.8.0"></script><script type="application/json" src="/search.json"></script></body></html>
